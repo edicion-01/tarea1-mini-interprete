@@ -1,7 +1,7 @@
 # Análisis — Tarea 1
 
 **Integrantes:**
-1.
+1. Mendoza Aragón Edith Alejandra
 2.
 3.
 
@@ -19,10 +19,10 @@
 
 | Componente | Qué recibe | Qué entrega | De qué es responsable |
 |---|---|---|---|
-| `lexer` | | | |
-| `parser` | | | |
-| `ast` | | | |
-| `evaluator` | | | |
+| `lexer` | La expresion numerica que buscamos interpretar | Devuelve la expresion tokenizada, con los tokens en una lista (en el orden que se leyo), es decir, categoriza todo en su respectivo tipo (numero, mas, menos, etc) | De tokenizar la expresion |
+| `parser` | La expresion ya tokenizada (es decir, la lista con los tokens) | Un AST que se encarga de definir la jerarquia de la operacion | De que podamos interpretar a la expresion con la jerarquia correcta (que le es indicada), es el encargado del analisis sintatico |
+| `ast` | La expresion termino a termino ya organizado | Los nodos que componen a AST | De catogorizar que vemos como numero y que vemos como operacion binaria, de armar los nodos |
+| `evaluator` | Los nodos del ast (la expresion separada individualmente por nodos) | La expresion interpretada (resultado) | De evaluar y devolver las expresiones numericas |
 
 ### 1.2 ¿Qué recorrido sigue una expresión desde que se recibe como texto hasta que produce un resultado?
 
