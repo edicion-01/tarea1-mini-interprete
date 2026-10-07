@@ -31,9 +31,9 @@
 | Etapa | Cómo se ve `(3 + 4) * 2` aquí |
 |---|---|
 | texto | `"(3 + 4) * 2"` |
-| tokens | |
-| AST | |
-| resultado | |
+| tokens | `"Token(PAR_IZQ, (, 0)", "Token(NUMERO, 3, 1)", "Token(MAS, +, 3)", "Token(NUMERO, 4, 5)", Token(PAR_DER, ), 6)", Token(POR, *, 8)", Token(NUMERO, 2, 10) `  |
+| AST | <br> `OperacionBinaria(*)` <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`│---Izquierda: OperacionBinaria(+)` <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`│`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`│---Izquierda: 3` <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`│`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`│---Derecha: 4` <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`│---Derecha: 2`  |
+| resultado | `14` |
 
 > Para el renglón del AST, dibújenlo **primero ustedes** y después comprueben
 > con `python3 interprete.py --arbol "(3 + 4) * 2"`. Si su dibujo y el del
