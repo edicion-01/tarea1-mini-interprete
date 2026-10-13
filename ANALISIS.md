@@ -65,6 +65,7 @@
 
 ### 2.2 ¿Qué comportamientos **no** estaban probados?
 
+La resta cuando se resta un numero mayor, la divison donde el residuo no sea cero, si los parentesis estan vacios, un parentesis incompleto, la jerrarquia sin parentesis entre la multiplicacion y la division, la division entre 0
 > Ésta es la pregunta importante de toda la tarea. Tómense su tiempo.
 
 ---
