@@ -48,7 +48,15 @@
 
 | Prueba | Componente | Comportamiento que verifica | ¿Cuántos operadores usa? | ¿Normal, frontera o inválida? |
 |---|---|---|---|---|
-| | | | | |
+| test_suma | evaluator | Suma entre dos numeros naturales | 1 | normal |
+| test_resta | evaluator | Resta entre dos numeros naturales, donde el primer termino es mayor que el numero que se resta | 1 | normal |
+| test_multiplicacion | evaluator | La multiplicacion entre dos numeros naturales | 1 | normal |
+| test_precedencia_sin_parentesis | evaluator | Que la jeraquia de operaciones se cumpla entre 3 numeros naturales sin la necesidad un parentesis (en este caso, que se cumpla que primero va la multiplicaion, despues la suma) | 2 | normal |
+| test_precedencia_con_parentesis | evaluator | Que la jeraquia de operaciones se cumpla entre 3 numeros naturales cuando incluimos parentesis (en este caso, prioritizar el parentesis sobre la multiplicacion) | 2 | normal |
+| test_tokeniza_un_numero_solo | lexer | Que la entrada con un solo numero natural sea bien tokenizada | 0 | frontera |
+| test_tokeniza_una_suma | lexer | Que la entrada con una suma entre dos numeros naturales sea bien tokenizada | 1 | normal |
+| test_los_espacios_no_producen_tokens | lexer | Que los espacios en una entrada, ya sea al inicio, entre elementos, al final o consecutivos, sea ignorado/no influyan la tokenizacion | 1 | normal y frontera |
+| test_tokeniza_parentesis | lexer | Que los parentesis que contienen una expresion valida sean bien tokenizados | 0 | normal |
 
 > Llenen la tabla **completa**, con las 13. Es tediosa a propósito: la única
 > forma de saber qué no está cubierto es caracterizar sistemáticamente lo que
