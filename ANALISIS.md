@@ -92,7 +92,7 @@ La resta cuando se resta un numero mayor, la divison donde el residuo no sea cer
 | test_evaluator::test_division_de_cero | 0 / 2 | 0 | Frontera | Pues es justo cuando se cambia de regla (a la del cero) y debemos verificar su comportamiento |
 | test_evaluator::test_division_entre_cero | 10 / 0 | Error | Invalido | La division en 0 no se puede, debemos checar que este error se cumpla (y este controlado en el programa) |
 | test_evaluator::test_precedencia_sin_parentesis_misma_precedencia_mult_div | 3 * 4 / 2 | 6 | Frontera | Cae justo en la regla de que, si se tiene misma precedencia se tome primero pro la izquierda |
-| test_evaluator::test_precedencia_sin_parentesis_misma_precedencia_sum_res | 3 * 4 / 2 | 6 | Frontera | Cae justo en la regla de que, si se tiene misma precedencia se tome primero pro la izquierda |
+| test_evaluator::test_precedencia_sin_parentesis_misma_precedencia_sum_res | 3 + 4 - 2 | 5 | Frontera | Cae justo en la regla de que, si se tiene misma precedencia se tome primero pro la izquierda |
 ---
 
 ## 4. Los defectos
