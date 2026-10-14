@@ -2,7 +2,7 @@
 
 **Integrantes:**
 1. Mendoza Aragón Edith Alejandra
-2.
+2. Mondragón Ceballos Evelyn Vianey
 3.
 
 **Fork:**
@@ -51,12 +51,16 @@
 | test_suma | evaluator | Suma entre dos numeros naturales | 1 | normal |
 | test_resta | evaluator | Resta entre dos numeros naturales, donde el primer termino es mayor que el numero que se resta | 1 | normal |
 | test_multiplicacion | evaluator | La multiplicacion entre dos numeros naturales | 1 | normal |
+| test_division | evaluator | La division entre dos numeros naturales, donde el numerador es mayor que el denominador | 1 | normal |
 | test_precedencia_sin_parentesis | evaluator | Que la jeraquia de operaciones se cumpla entre 3 numeros naturales sin la necesidad un parentesis (en este caso, que se cumpla que primero va la multiplicaion, despues la suma) | 2 | normal |
 | test_precedencia_con_parentesis | evaluator | Que la jeraquia de operaciones se cumpla entre 3 numeros naturales cuando incluimos parentesis (en este caso, prioritizar el parentesis sobre la multiplicacion) | 2 | normal |
 | test_tokeniza_un_numero_solo | lexer | Que la entrada con un solo numero natural sea bien tokenizada | 0 | frontera |
 | test_tokeniza_una_suma | lexer | Que la entrada con una suma entre dos numeros naturales sea bien tokenizada | 1 | normal |
 | test_los_espacios_no_producen_tokens | lexer | Que los espacios en una entrada, ya sea al inicio, entre elementos, al final o consecutivos, sea ignorado/no influyan la tokenizacion | 1 | normal y frontera |
 | test_tokeniza_parentesis | lexer | Que los parentesis que contienen una expresion valida sean bien tokenizados | 0 | normal |
+| test_construye_el_arbol_de_una_suma | parser | Que el arbol resultante de una suma de dos numeros naturales sea correcto | 1 | normal |
+| test_la_multiplicacion_se_agrupa_antes_que_la_suma | parser | Que el arbol resultante de una operacion con suma y multiplicacion, que inicialmente no lleva parentesis, agrupe correctamente las operaciones (priorizando la multiplicacion), y el arbol muestre correctamente dicha jerarquia de operaciones | 2 | normal |
+| test_los_parentesis_cambian_la_agrupacion | parser | Que el arbol resultante de una operacion de suma y multiplicacion con parentesis, se agrupe correctamente (priorizando ahora el parentesis) y el arbol muestre correctamente dicha jerarquia de operaciones | 2 | normal |
 
 > Llenen la tabla **completa**, con las 13. Es tediosa a propósito: la única
 > forma de saber qué no está cubierto es caracterizar sistemáticamente lo que
@@ -65,7 +69,7 @@
 
 ### 2.2 ¿Qué comportamientos **no** estaban probados?
 
-La resta cuando se resta un numero mayor, la divison donde el residuo no sea cero, si los parentesis estan vacios, un parentesis incompleto, la jerrarquia sin parentesis entre la multiplicacion y la division, la division entre 0
+La resta cuando se resta un numero mayor, la divison donde el residuo no sea cero, si los parentesis estan vacios, un parentesis incompleto, la jerrarquia sin parentesis entre la multiplicacion y la division, la division entre 0, lo que sucede si se ingresa un texto o se combina texto con operaciones
 > Ésta es la pregunta importante de toda la tarea. Tómense su tiempo.
 
 ---
