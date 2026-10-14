@@ -69,7 +69,7 @@
 
 ### 2.2 ¿Qué comportamientos **no** estaban probados?
 
-La resta cuando se resta un numero mayor, la divison donde el residuo no sea cero, si los parentesis estan vacios, un parentesis incompleto, la jerrarquia sin parentesis entre la multiplicacion y la division, la division entre 0, lo que sucede si se ingresa un texto o se combina texto con operaciones
+La resta cuando se resta un numero mayor, la divison donde el residuo no sea cero, si los parentesis estan vacios, un parentesis incompleto, la asociacion (a la izquierda) sin parentesis entre la multiplicacion y la division y la suma y resta, la division entre 0, la resta con 0, la suma con 0, la resta con un mismo numero, lo que sucede si se ingresa un texto o se combina texto con operaciones
 > Ésta es la pregunta importante de toda la tarea. Tómense su tiempo.
 
 ---
@@ -80,8 +80,19 @@ La resta cuando se resta un numero mayor, la divison donde el residuo no sea cer
 
 | Prueba (archivo::nombre) | Entrada | Esperado | Categoría | ¿Por qué esa categoría? |
 |---|---|---|---|---|
-| | | | | |
-
+| test_evualator::test_suma_ambos_cero | 0 + 0 | 0 | Frontera | Pues estamos justo en el cero y tenemos que asegura que las reglas del cero se cumplan, es decir, que el 0 no vaya a negativos o positivos |
+| test_evualator::test_suma_cero_y_uno | 0 + 1 | 1 | Frontera | Pues es justo despues de que cambie el comportamiento de la suma (de 0 a naturales) |
+| test_evualator::test_resta_mismo_numero | 3 - 3 | 0 | Frontera | Pues es justo donde se cambia el comportamiento de la resta (de naturales a 0) |
+| test_evualator::test_resta_cero_y_uno | 0 - 1 | -1 | Frontera | Pues es justo antes de que cambie el comportamiento de la resta (de enteros negativos a 0) |
+| test_evualator::test_resta_cero_al_final | 1 - 0 | 1 | Frontera | Pues es justo antes de que cambie el comportamiento de la resta (de naturales a 0) |
+| test_evualator::test_resta_ambos_cero | 0 - 0 | 0 | Frontera | Pues estamos justo en el 0 y tenemos que asegura que las reglas del cero se cumplan, es decir, que el 0 no vaya a negativos o positivos |
+| test_evualator::test_resta_el_mayor_al_final | 5 - 8 | -3 | Normal | Pues no es justo cuando se cambia de regla o cuando se esta apunto de cambair de regla |
+| test_evaluator::test_multiplicacion_con_cero | 6 * 0 | 0 | Frontera | Pues es justo cuando se cambia de regla (a la del cero) y debemos verificar su comportamiento |
+| test_evaluator::test_multiplicacion_ambos_cero | 0 * 0 | 0 | Frontera | Pues es justo cuando se cambia de regla (a la del cero) y debemos verificar su comportamiento |
+| test_evaluator::test_division_de_cero | 0 / 2 | 0 | Frontera | Pues es justo cuando se cambia de regla (a la del cero) y debemos verificar su comportamiento |
+| test_evaluator::test_division_entre_cero | 10 / 0 | Error | Invalido | La division en 0 no se puede, debemos checar que este error se cumpla (y este controlado en el programa) |
+| test_evaluator::test_precedencia_sin_parentesis_misma_precedencia_mult_div | 3 * 4 / 2 | 6 | Frontera | Cae justo en la regla de que, si se tiene misma precedencia se tome primero pro la izquierda |
+| test_evaluator::test_precedencia_sin_parentesis_misma_precedencia_sum_res | 3 * 4 / 2 | 6 | Frontera | Cae justo en la regla de que, si se tiene misma precedencia se tome primero pro la izquierda |
 ---
 
 ## 4. Los defectos
