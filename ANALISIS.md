@@ -69,7 +69,7 @@
 
 ### 2.2 ¿Qué comportamientos **no** estaban probados?
 
-La resta cuando se resta un numero mayor, la divison donde el residuo no sea cero, si los parentesis estan vacios, un parentesis incompleto, la asociacion (a la izquierda) sin parentesis entre la multiplicacion y la division y la suma y resta, la division entre 0, la resta con 0, la suma con 0, la resta con un mismo numero, lo que sucede si se ingresa un texto o se combina texto con operaciones
+La resta cuando se resta un numero mayor, la divison donde el residuo no sea cero, si los parentesis estan vacios, un parentesis incompleto, la asociacion (a la izquierda) sin parentesis entre la multiplicacion y la division y la suma y resta, la division entre 0, la resta con 0, la suma con 0, la resta con un mismo numero, lo que sucede si se ingresa un texto o se combina texto con operaciones.
 > Ésta es la pregunta importante de toda la tarea. Tómense su tiempo.
 
 ---
@@ -91,8 +91,16 @@ La resta cuando se resta un numero mayor, la divison donde el residuo no sea cer
 | test_evaluator::test_multiplicacion_ambos_cero | 0 * 0 | 0 | Frontera | Pues es justo cuando se cambia de regla (a la del cero) y debemos verificar su comportamiento |
 | test_evaluator::test_division_de_cero | 0 / 2 | 0 | Frontera | Pues es justo cuando se cambia de regla (a la del cero) y debemos verificar su comportamiento |
 | test_evaluator::test_division_entre_cero | 10 / 0 | Error | Invalido | La division en 0 no se puede, debemos checar que este error se cumpla (y este controlado en el programa) |
+| test_evaluator::test_division_entre_cero_con_cero | 0 / 0 | Error | Invalido | Esta division no se puede |
 | test_evaluator::test_precedencia_sin_parentesis_misma_precedencia_mult_div | 3 * 4 / 2 | 6 | Frontera | Cae justo en la regla de que, si se tiene misma precedencia se tome primero pro la izquierda |
 | test_evaluator::test_precedencia_sin_parentesis_misma_precedencia_sum_res | 3 + 4 - 2 | 5 | Frontera | Cae justo en la regla de que, si se tiene misma precedencia se tome primero pro la izquierda |
+| test_evaluator::test_parentesis_vacios | () | Error | Invalido | No contiene una operacion valida para evaluar |
+| test_evaluator::test_parentesis_vacios_operaciones | ( ), () / 2, 3 + (), () * 2, (()), 2 / 1 + () | Error | Invalido | No se pueden hacer operaciones con parentesis vacios ya que no contienen indicaciones validas para evaluar |
+| test_evaluator::test_parentesis_incompletos | (, ), (3 + 1, 3 * 2), (4 * 8)) | Error | Invalido | Los parentesis no estan completos por lo que la operacion ya no se puede evaluar o puede dar errores, ademas los parentesis incompletos por si solos no son una operacion valida |
+| test_evaluator::test_asociar_izquierda_resta | 1 - 3 - 5 | -7 | Normal | No es justo cuando el comportamiento cambia, unicamente es un ejemplo de usar la misma operacion y que el resultado sea el correcto |
+| test_evaluator::test_asociar_izquierda_division | 12 / 3 / 2 | 2 | Normal | No es justo cuando el comportamiento cambia, unicamente es un ejemplo donde si se asocia a la derecha el resultado es diferente |
+| test_lexer::test_no_tokenizar_letras | 1 + a | Error | Invalido | No podemos sumar letras o combinar texto con operaciones |
+| test_lexer::test_entradas_invalidas | a, 2 + a, abc, 2 & 1, holaa | Error | Invalido | No se pueden hacer operaciones con texto ni ingresar unicamente texto |
 ---
 
 ## 4. Los defectos
