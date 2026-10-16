@@ -106,8 +106,15 @@ La resta cuando se resta un numero mayor, la divison donde el residuo no sea cer
 ## 4. Los defectos
 
 ### 4.1 ¿Qué defecto reveló primero una prueba nueva?
+La prueba de parentesis incompletos y de entradas invalidas revelo que los errores (de entrada) no estaban siendo atrapados por el programa, como se pedia en las reglas, ni indicaban exactamente donde se produjo el error. 
+
+La prueba de asociar a la izquierda de la resta y division revelo que el programa como estaba asociaba por la derecha en vez de la izquierda, como se pide en las regloas.
 
 ### 4.2 ¿Por qué el comportamiento observado era incorrecto?
+
+Las reglas 8 y 9 del README (en Semantica declarada, seccion 7), se nos indica que el interprete debe de agarrar los errores de sintaxis con el error personalizado, no el de python, cosa que el programa no cumplia antes de las modificaciones (pues saltaba el error de python donde te enseñan en qu eparte de los archivos se dio el error) y se nos pide que cada error nos diga la posicion en que fallo y como el programa, antes de las modificaciones, no nos daba nuestro error perzonalizado no cumplia con la regla
+
+La 6 regla del README (en Semantica declarada, seccion 7), nos pide que en caso de tener dos operacciones de la misma precedencia se asocien por la izquierda, cosa que no estaba haciendo el programa antes de las modificaciones
 
 > No basta con "daba mal". Digan contra qué lo están comparando: qué regla,
 > qué línea de la semántica declarada del README.
@@ -116,9 +123,15 @@ La resta cuando se resta un numero mayor, la divison donde el residuo no sea cer
 
 | Defecto | Entrada que lo revela | Daba | Debería dar | Commit rojo | Commit verde |
 |---|---|---|---|---|---|
-| | | | | | |
+| entradas invalidas no las agarraba ErrorDeSintaxis | "(" | Saltaba error de python | (Nuestro error de sintaxis personalizado, en este caso:) final de expresion inesperado (posicion n) | agrega nuevos tests de evaluator y lexer | lexer y parser: validacion de errores de sintaxis |
+| entradas invalidas no las agarraba ErrorDeSintaxis | "a" | Saltaba error de python | (Nuestro error de sintaxis personalizado, en este caso:) Caracter invalido 'c' (posicion n) | agrega nuevos tests de evaluator y lexer | lexer y parser: validacion de errores de sintaxis |
+| asociatividad por derecha | 1 - 3 - 5 | 3 | -7 | agrega nuevos tests de evaluator y lexer | lexer y parser: validacion de errores de sintaxis |
+
 
 ### 4.4 ¿Cómo saben que la corrección es general y no sólo hace pasar ese ejemplo?
+
+Podemos decir que es una correcion general pues se hicieron mas de una prueba donde pasa el mismo defecto, pero las entradas son tan diferentes entre si que cubrimos variso casos donde el efecto es visible sin que se e bajo las mismas circustancias. Es decir, verificamos que en todos los casos posibles (que se nos ocurrieron) donde este defecto se pueda el programa ver se comporte como deberia, y no solo lo verificamos en la entrada que nos revelo el defecto
+
 
 ---
 
