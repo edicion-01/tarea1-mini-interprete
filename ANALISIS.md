@@ -20,8 +20,8 @@
 | Componente | Qué recibe | Qué entrega | De qué es responsable |
 |---|---|---|---|
 | `lexer` | La expresion numerica que buscamos interpretar | Devuelve la expresion tokenizada, con los tokens en una lista (en el orden que se leyo), es decir, categoriza todo en su respectivo tipo (numero, mas, menos, etc) | De tokenizar la expresion |
-| `parser` | La expresion ya tokenizada (es decir, la lista con los tokens) | Un AST que se encarga de definir la jerarquia de la operacion | De que podamos interpretar a la expresion con la jerarquia correcta (que le es indicada), es el encargado del analisis sintatico |
-| `ast` | La expresion termino a termino ya organizado | Los nodos que componen a AST | De catogorizar que vemos como numero y que vemos como operacion binaria, de armar los nodos |
+| `parser` | La expresion ya tokenizada (es decir, la lista con los tokens) | Un AST (mediante nodos) con la jerarquia correcta | De que podamos interpretar a la expresion con la jerarquia correcta (que le es indicada), es el encargado del analisis sintatico (construye el ast) |
+| `ast` | Los valores que componen los nodos futuros (en teoria, numeros y operaciones) | Los nodos que componen a AST | Forma los nodos del ast |
 | `evaluator` | Los nodos del ast (la expresion separada individualmente por nodos) | La expresion interpretada (resultado) | De evaluar y devolver las expresiones numericas |
 
 ### 1.2 ¿Qué recorrido sigue una expresión desde que se recibe como texto hasta que produce un resultado?
@@ -138,16 +138,32 @@ Podemos decir que es una correcion general pues se hicieron mas de una prueba do
 ## 5. Diseño
 
 ### 5.1 ¿Qué duplicación o señal de mal diseño encontraron?
+En la clase evaluator presenciamos demasiados condicionales para poder evaluar las operaciones, lo cual también implica duplicación de código. Ambas señales de mal diseño.
+
 
 > Al menos dos. Usen el vocabulario de clase: duplicación, rigidez,
 > acoplamiento alto, condicionales repetidos, amplificación del cambio.
 
 ### 5.2 ¿Qué refactorización realizaron, y por qué conserva el comportamiento?
+Modificamos la clase ast tal que la lógica de evaluar los operadores (y sus errores) recaiga en Nodo, y por lo tanto en Número y OperacionesBinarias, mientras que evaluator solo llama a estos metodos, haciendo así polimorfismo. Esto, además de solucionar los problemas mencionados anteriormente, pasa la responsabilidad de evaluar a ast en vez de evaluator, haciendo que ast maneje lógica y no solo sirva como si fuera una forma de hacer nodos y clasificarlos. 
+
+En este caso se conversa el comportamiento pues la logica sigue siendo la misma (leemos el operador y de ahi evaluamos izq y derecha), solo cambiamos como se hace la logica. Tambien cambiamos la responsabilidad de evaluator a ast, pero como el flujo es ast -> evaluator, ast no tenia responsabilidad logica(mas alla de decir "este nodo tipo..") y la unica logica de evaluator era evaluar (y la pasamos a ast) esto no cambia el comportamiento, solo donde y el orden de lo que hacemos.  
+
+
+
 
 > "Las pruebas siguen pasando" es parte de la respuesta, pero no toda.
 > ¿Por qué el cambio es equivalente?
 
 ### 5.3 ¿Sería pertinente usar Factory Method, Adapter o ninguno?
+
+Ninguno.
+Se puede usar ambos, pero solo nos complicariamos de más el codigo.
+De usar Factory Method se tendria que usar en Nodo y en las clases que lo heredan, o en Token pues son los unicos objetos en nuestro interprete. Sin embargo como Token esta "solo" como objeto (no hereda de nadie, no tiene hijos o hermanos) aplicar Factory seria sobredescomponer algo que no lo necesita
+
+En Nodo (y demas) si bien si existe una jerarquia, parser ya sabe que va a trabajar con numeros y operaciones, ademas que los isntancia de maner alimpia y sin problemas. De agregar Factory algo sencillo que funciona (parser <-> ast), se el agregrian pasos extra qu eno son realmente necesarios
+
+EL Adapter, por su parte, seria casi inutil pues cada parte esta conciente de con que se esta comunicando (es decir, por ejemplo, el parser sabe que va a recibir y trabajar con tokens) y se definen con base a esto. Agregar un Adapter seria agregar un paso más que no es necesario, lo cual nos sobrecomplicaria el codigo. 
 
 > Justifiquen. **"Ninguno" puede ser la respuesta correcta.** Si dicen que sí,
 > digan qué problema concreto resuelve y qué costo tiene. Si dicen que no,
