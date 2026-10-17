@@ -15,8 +15,10 @@ from .ast import Numero, OperacionBinaria
 from .errores import ErrorDeSintaxis
 from .tokens import TipoToken
 
-OPERADORES_SUMA = (TipoToken.MAS, TipoToken.MENOS)
-OPERADORES_PRODUCTO = (TipoToken.POR, TipoToken.ENTRE)
+NIVELES = (
+    (TipoToken.MAS, TipoToken.MENOS),
+    (TipoToken.POR, TipoToken.ENTRE),
+)
 
 
 class Parser:
@@ -48,22 +50,14 @@ class Parser:
         self.pos += 1
         return token
 
-    def _expresion(self):
-        izquierda = self._termino()
+    def _expresion(self, nivel = 0):
+        if nivel == len(NIVELES):
+            return self._factor()
+        izquierda = self._expresion(nivel + 1)
         actual = self._actual()
-        while actual is not None and actual.tipo in OPERADORES_SUMA:
+        while actual is not None and actual.tipo in NIVELES[nivel]:
             operador = self._avanzar()
-            derecha = self._termino()
-            izquierda = OperacionBinaria(operador.valor, izquierda, derecha)
-            actual = self._actual()
-        return izquierda
-
-    def _termino(self):
-        izquierda = self._factor()
-        actual = self._actual()
-        while actual is not None and actual.tipo in OPERADORES_PRODUCTO:
-            operador = self._avanzar()
-            derecha = self._factor()
+            derecha = self._expresion(nivel + 1)
             izquierda = OperacionBinaria(operador.valor, izquierda, derecha)
             actual = self._actual()
         return izquierda
