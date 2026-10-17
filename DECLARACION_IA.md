@@ -13,7 +13,7 @@
 
 ## 0. ¿Se usó IA en esta actividad?
 
-- [ ] **No.** Firmen la última sección y terminen. Con eso queda completa.
+- [ * ] **No.** Firmen la última sección y terminen. Con eso queda completa.
 - [ ] **Sí.** Contesten los cinco puntos.
 
 ---
@@ -22,7 +22,7 @@
 
 | Herramienta | Versión o modelo, si lo saben |
 |---|---|
-| | |
+| Gemini | 3.6 |
 
 > Cuenta también el autocompletado del editor (Copilot y similares). Si sólo
 > fue eso, basta con decirlo en un renglón y seguir al punto 4.
@@ -33,7 +33,7 @@
 
 | Para qué la usamos | En qué parte del entregable |
 |---|---|
-| | |
+| Para ayudarnos en la factorizacion del ast, en especifico como hacer el dicionario que guaradara el string de las operaiones y que a la vez guardara como evaluar cada una de estas, pues se tenia la idea pero no exactamente como ejecutarla | commit: refactorizacion de ast y evaluator (repeticion de ifs). En ast.py |
 
 > Sean específicos. *"Para la tarea"* no dice nada.
 > *"Para generar las pruebas de `minimo_de_llaves`"* sí.
@@ -45,7 +45,8 @@
 Textuales, tal como los escribieron. No los limpien ni los reescriban.
 
 ```
-(prompt 1)
+Quiero hacer, en python, un diccionario OPERACIONES tal que cada opercion tenga un simbolo (string) asociado y que al llamarlo pueda evaluarse (tipo if op is in OPERACIONES do (a,b)[operacion])
+
 ```
 
 ```
@@ -60,7 +61,8 @@ Textuales, tal como los escribieron. No los limpien ni los reescriban.
 
 | Qué produjo la herramienta | ¿Aceptado, modificado o descartado? | Por qué | Dónde quedó (archivo / commit) |
 |---|---|---|---|
-| | | | |
+| Un codigo de ejemplo donde nos daba un diccionario y como usarlo en un if simple. Se nos dio dos opciones, usando operator o lambda, y una simplificacion para usar get en vez de if .. in | Modificado | Al no pasarle el codigo, si no la idea, ni el contexto no se podia simplemente aceptar lo que se nos dio, se tenia que modiicar para que fuera compatible con lo que teniamos en ast | commit: refactorizacion de ast y evaluator (repeticion de ifs). En ast.py  |
+
 
 > **"Lo descartamos" es una respuesta excelente**, si dicen por qué.
 > Una declaración donde todo se aceptó sin cambios es una declaración que
@@ -82,6 +84,8 @@ Se les pidió intentarlo primero por su cuenta. Si lo hicieron así:
 > Si no usaron IA para el análisis, escriban *"no aplica"*.
 
 ### 4.2 ¿Cómo verificaron que lo que incorporaron era correcto?
+
+Para ast: una vez se adapto al codigo se volvieorn a hacer las pruebas y todas pasaron, es decir, que si se estab aleyendo el diccionario bien (estaba identificando bien los simbolos y como evaluarlo)
 
 > Una prueba que escribieron, una ejecución, un contraste contra las notas de
 > clase o contra el enunciado. *"Lo revisamos"* no es una verificación.
@@ -107,4 +111,4 @@ Se les pidió intentarlo primero por su cuenta. Si lo hicieron así:
 
 | Nombre | Número de cuenta |
 |---|---|
-| | |
+| Mendoza Aragón Edith Alejandra | 323238702 |
