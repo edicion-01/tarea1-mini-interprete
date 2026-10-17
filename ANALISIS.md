@@ -5,8 +5,8 @@
 2. Mondragón Ceballos Evelyn Vianey
 3.
 
-**Fork:**
-**Rama:**
+**Fork:** https://github.com/edicion-01/tarea1-mini-interprete
+**Rama:** main
 
 > Contesten en este archivo. Respuestas breves y concretas: se califica que
 > hayan entendido, no la extensión.
