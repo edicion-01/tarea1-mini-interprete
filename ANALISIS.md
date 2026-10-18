@@ -19,7 +19,7 @@
 
 | Componente | Qué recibe | Qué entrega | De qué es responsable |
 |---|---|---|---|
-| `lexer` | La expresion numerica que buscamos interpretar | Devuelve la expresion tokenizada, con los tokens en una lista (en el orden que se leyo), es decir, categoriza todo en su respectivo tipo (numero, mas, menos, etc) | De tokenizar la expresion |
+| `lexer` | La expresion numérica que buscamos interpretar | Devuelve la expresion tokenizada, con los tokens en una lista (en el orden que se leyo), es decir, categoriza todo en su respectivo tipo (numero, mas, menos, etc) | De tokenizar la expresion |
 | `parser` | La expresion ya tokenizada (es decir, la lista con los tokens) | Un AST (mediante nodos) con la jerarquia correcta | De que podamos interpretar a la expresion con la jerarquia correcta (que le es indicada), es el encargado del analisis sintatico (construye el ast) |
 | `ast` | Los valores que componen los nodos futuros (en teoria, numeros y operaciones) | Los nodos que componen a AST | Forma los nodos del ast |
 | `evaluator` | Los nodos del ast (la expresion separada individualmente por nodos) | La expresion interpretada (resultado) | De evaluar y devolver las expresiones numericas |
@@ -140,6 +140,8 @@ Podemos decir que es una correcion general pues se hicieron mas de una prueba do
 ### 5.1 ¿Qué duplicación o señal de mal diseño encontraron?
 En la clase evaluator presenciamos demasiados condicionales para poder evaluar las operaciones, lo cual también implica duplicación de código. Ambas señales de mal diseño.
 
+En la clase parser teniamos definidos "termino" y "expresion" los cuales hacian escencialmente lo mismo, solo cambiaban los operadores que buscaban y el método al que pedían sus operandos. Esa duplicación es una señal de mal diseño porque cualquier cambio en la lógica debía hacerse en ambos métodos, y cada nivel de precedencia nuevo exigía copiar otro método.
+
 
 > Al menos dos. Usen el vocabulario de clase: duplicación, rigidez,
 > acoplamiento alto, condicionales repetidos, amplificación del cambio.
@@ -149,7 +151,7 @@ Modificamos la clase ast tal que la lógica de evaluar los operadores (y sus err
 
 En este caso se conversa el comportamiento pues la logica sigue siendo la misma (leemos el operador y de ahi evaluamos izq y derecha), solo cambiamos como se hace la logica. Tambien cambiamos la responsabilidad de evaluator a ast, pero como el flujo es ast -> evaluator, ast no tenia responsabilidad logica(mas alla de decir "este nodo tipo..") y la unica logica de evaluator era evaluar (y la pasamos a ast) esto no cambia el comportamiento, solo donde y el orden de lo que hacemos.  
 
-
+Modificando la clase parser, termino y expresion podian unificarse en uno solo que construyera el arbol para todos los niveles de operaciones para eso se agrego NIVELES el cual agrupa los operadores de acuerdo a su orden de precedencia, con eso se borro termino y se conservo expresion, el cual busca los operadores del nivel que recibe y se llama a si mismo para pedir cada operando al nivel de abajo. Igualmente, se conserva el comportamiento porque cada nivel sigue tomando sus operandos del nivel más prioritario, así que la precedencia es la misma, mantiene la asociatividad a la izquierda y los test que ya estaban siguen pasando.
 
 
 > "Las pruebas siguen pasando" es parte de la respuesta, pero no toda.
@@ -170,6 +172,8 @@ EL Adapter, por su parte, seria casi inutil pues cada parte esta conciente de co
 > digan qué tendría que cambiar en el sistema para que empezara a convenir.
 
 ### 5.4 ¿Qué parte del sistema sería más difícil de modificar si se agregara un operador nuevo?
+
+Al no usar Factory Method, habria que tocar varias partes del codigo debido a que el comportamiento de los operadores sigue repartido en varios archivos. En lexer habría que agregar el simbolo y el nuevo tipo de token de ese operador. En parser decidir y ubicar correctamente el nivel al que pertenece. En ast agregarlo a sus operaciones, revisar las excepciones de ese operador y capturar sus respectivos errores con ErrorDeEvaluacion o ErrorDeSintaxis (dependiendo el caso) y no con errores de python. Y hacer los test respectivos. Por otra parte, hay que revisar los casos para asociar correctamente ya que operaciones como las potencias se deben asociar a la derecha. En varios casos de operaciones se tendria que ver su respectivo comportamiento (como los casos donde tienen solo una entrada y habria que modificar un poco mas el parser y ast) y en caso de que no sean "similares" a los ya definidos. Es por eso que lo mas dificil seria que se deben modificar varios archivos y revisar en cada uno que cumpla con lo necesario para evaluarlo bien.
 
 > Por ejemplo `%`. ¿Cuántos archivos hay que tocar? ¿Por qué?
 
