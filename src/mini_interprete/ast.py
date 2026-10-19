@@ -11,10 +11,14 @@ Para  3 + 4 * 2  el arbol es:
 Un Numero no contiene nada. Una OperacionBinaria contiene otros nodos, que a
 su vez pueden ser numeros u otras operaciones.
 """
-
+from .errores import ErrorDeEvaluacion
+import operator
 
 class Nodo:
     """Cualquier cosa que pueda aparecer en el arbol."""
+
+    def evaluar(self):
+        raise ErrorDeEvaluacion(f"nodo desconocido: {self!r}")
 
 
 class Numero(Nodo):
@@ -29,8 +33,20 @@ class Numero(Nodo):
             return NotImplemented
         return self.valor == otro.valor
 
+    def evaluar(self):
+        return self.valor
+
 
 class OperacionBinaria(Nodo):
+
+    OPERACIONES = {
+        "+": operator.add,
+        "-": operator.sub,
+        "*": operator.mul,
+        "/": operator.truediv,
+    }
+
+
     def __init__(self, operador: str, izquierda: Nodo, derecha: Nodo):
         self.operador = operador
         self.izquierda = izquierda
@@ -46,3 +62,16 @@ class OperacionBinaria(Nodo):
         return (self.operador == otro.operador
                 and self.izquierda == otro.izquierda
                 and self.derecha == otro.derecha)
+
+    def evaluar(self):
+        izquierda = self.izquierda.evaluar()
+        derecha = self.derecha.evaluar()
+
+        if self.operador == "/" and derecha == 0:
+            raise ErrorDeEvaluacion("division entre cero")
+
+        if self.operador in self.OPERACIONES:
+            return self.OPERACIONES[self.operador](izquierda, derecha)
+
+        raise ErrorDeEvaluacion(f"operador desconocido: {self.operador!r}")
+
